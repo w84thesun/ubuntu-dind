@@ -52,5 +52,7 @@ VOLUME /var/lib/docker
 RUN curl -L "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose \
 	&& chmod +x /usr/local/bin/docker-compose
 
+RUN apt-get install -qq -y golang-1.14 build-essential git
+
 ENTRYPOINT ["startup.sh"]
 CMD ["sh"]
