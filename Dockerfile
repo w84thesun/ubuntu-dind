@@ -1,9 +1,12 @@
 FROM ubuntu:20.04
 
-RUN apt update \
-    && apt install -y ca-certificates openssh-client \
-    wget curl iptables supervisor \
-    && rm -rf /var/lib/apt/list/*
+RUN apt update && \
+    apt install -y ca-certificates openssh-client wget curl iptables supervisor git build-essential && \
+    rm -rf /var/lib/apt/list/*
+
+RUN wget https://golang.org/dl/go1.16.7.linux-amd64.tar.gz
+RUN tar -C /opt -xzf go1.16.7.linux-amd64.tar.gz
+ENV PATH=$PATH:/opt/go/bin
 
 ENV DOCKER_CHANNEL=stable \
 	DOCKER_VERSION=19.03.11 \
@@ -51,8 +54,6 @@ VOLUME /var/lib/docker
 # Docker compose installation
 RUN curl -L "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose \
 	&& chmod +x /usr/local/bin/docker-compose
-
-RUN apt-get install -qq -y golang-1.14 build-essential git
 
 ENTRYPOINT ["startup.sh"]
 CMD ["sh"]
