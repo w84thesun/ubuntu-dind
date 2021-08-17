@@ -1,7 +1,7 @@
 FROM ubuntu:20.04
 
 RUN apt update && \
-    apt install -y ca-certificates openssh-client wget curl iptables supervisor git build-essential && \
+    apt install -y ca-certificates openssh-client wget curl iptables supervisor git build-essential net-tools && \
     rm -rf /var/lib/apt/list/*
 
 RUN wget https://golang.org/dl/go1.16.7.linux-amd64.tar.gz
